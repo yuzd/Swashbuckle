@@ -104,7 +104,7 @@ namespace Swashbuckle.Swagger
 
         public string description;
 
-        public string author ="dddddd";
+        public string author;
 
         public ExternalDocs externalDocs;
 
