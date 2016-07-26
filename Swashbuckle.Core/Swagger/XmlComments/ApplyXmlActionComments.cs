@@ -13,6 +13,7 @@ namespace Swashbuckle.Swagger.XmlComments
         private const string SummaryTag = "summary";
         private const string RemarksTag = "remarks";
         private const string ParameterTag = "param";
+        private const string AuthorTag = "author";
         private const string ResponseTag = "response";
         
         private readonly XPathNavigator _navigator;
@@ -22,6 +23,7 @@ namespace Swashbuckle.Swagger.XmlComments
             _navigator = new XPathDocument(xmlCommentsPath).CreateNavigator();
         }
 
+      
         public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
             var reflectedActionDescriptor = apiDescription.ActionDescriptor as ReflectedHttpActionDescriptor;
@@ -34,6 +36,10 @@ namespace Swashbuckle.Swagger.XmlComments
             var summaryNode = methodNode.SelectSingleNode(SummaryTag);
             if (summaryNode != null)
                 operation.summary = summaryNode.ExtractContent();
+
+            var authorNode = methodNode.SelectSingleNode(AuthorTag);
+            if (authorNode != null)
+                operation.author = authorNode.ExtractContent();
 
             var remarksNode = methodNode.SelectSingleNode(RemarksTag);
             if (remarksNode != null)

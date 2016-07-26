@@ -66,7 +66,6 @@ namespace Swashbuckle.Swagger
                 definitions = schemaRegistry.Definitions,
                 securityDefinitions = _options.SecurityDefinitions,
             };
-            setAuthor(paths);
             setTags(swaggerDoc, _options.ModelFilters);
             foreach(var filter in _options.DocumentFilters)
             {
@@ -74,14 +73,6 @@ namespace Swashbuckle.Swagger
             }
 
             return swaggerDoc;
-        }
-
-        private void setAuthor(Dictionary<string, PathItem> paths)
-        {
-            foreach (var item in paths)
-            {
-                //para
-            }
         }
 
         private void setTags(SwaggerDocument swaggerDoc, IEnumerable<IModelFilter> modelFilters)
