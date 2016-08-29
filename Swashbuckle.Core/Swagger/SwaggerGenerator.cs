@@ -222,6 +222,7 @@ namespace Swashbuckle.Swagger
             parameter.@default = paramDesc.ParameterDescriptor.DefaultValue;
 
             var schema = schemaRegistry.GetOrRegister(paramDesc.ParameterDescriptor.ParameterType);
+            var isJToken = paramDesc.ParameterDescriptor.ParameterType.FullName.Equals("Newtonsoft.Json.Linq.JObject");
             if (parameter.@in == "body")
                 parameter.schema = schema;
             else

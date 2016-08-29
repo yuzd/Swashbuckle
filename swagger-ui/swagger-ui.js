@@ -26259,7 +26259,7 @@ SwaggerUi.Views.SignatureView = Backbone.View.extend({
   render: function(){
 
     $(this.el).html(Handlebars.templates.signature(this.model));
-
+ console.log(this.model);
     if (this.model.defaultRendering === 'model') {
       this.switchToDescription();
     } else {
