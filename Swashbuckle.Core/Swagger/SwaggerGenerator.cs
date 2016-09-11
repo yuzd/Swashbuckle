@@ -66,18 +66,20 @@ namespace Swashbuckle.Swagger
                 definitions = schemaRegistry.Definitions,
                 securityDefinitions = _options.SecurityDefinitions,
             };
-            setTags(swaggerDoc, _options.ModelFilters);
+            var keys = paths.Keys.ToList();
+            setTags(swaggerDoc, _options.ModelFilters, keys);
             foreach(var filter in _options.DocumentFilters)
             {
                 filter.Apply(swaggerDoc, schemaRegistry, _apiExplorer);
             }
-
+            
             return swaggerDoc;
         }
 
-        private void setTags(SwaggerDocument swaggerDoc, IEnumerable<IModelFilter> modelFilters)
+        private void setTags(SwaggerDocument swaggerDoc, IEnumerable<IModelFilter> modelFilters,List<string> keys)
         {
             var result = new List<Tag>();
+            var isKeys = keys != null && keys.Count > 0;
             try
             {
                 var filter = modelFilters.FirstOrDefault();
@@ -91,18 +93,29 @@ namespace Swashbuckle.Swagger
                         if (summaryNode != null)
                         {
                             var name = item.GetAttribute("name", "");
+                            var nameXPath = "/doc/members/member[starts-with(@name,'M:"+ name.Replace("T:","") + "')]";
+                            var nameXPathNode = filter.XmlNavigator.Select(nameXPath);
                             name = name.Split('.').Last().Replace("Controller", "");
                             var summary = summaryNode.ExtractContent();
+                            //if (isKeys)
+                            //{
+                            //    var count = keys.Count(r => r.StartsWith("/" + name + "/"));
+                            //    summary = summary + "(" + count + ")";
+                            //}
+                            if (nameXPathNode.Count>0)
+                            {
+                                summary = summary + "(" + nameXPathNode.Count + ")";
+                            }
                             result.Add(new Tag {name = name,description = summary});
                         }
                     }
-                    swaggerDoc.tags = result;
                 }
             }
             catch (Exception)
             {
                 //ignore
             }
+            swaggerDoc.tags = result;
         }
 
         private IEnumerable<ApiDescription> GetApiDescriptionsFor(string apiVersion)
