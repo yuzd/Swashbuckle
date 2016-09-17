@@ -40,7 +40,7 @@ window.SwaggerTranslator.learn({
     "api version":"api版本",
     "Response Content Type":"响应Content Type",
     "fetching resource":"正在获取资源",
-    "fetching resource list":"正在获取资源列表",
+    "fetching resource list: ":"正在获取资源列表",
     "Explore":"浏览",
     "Show Swagger Petstore Example Apis":"显示 Swagger Petstore 示例 Apis",
     "Can't read from server.  It may not have the appropriate access-control-origin settings.":"无法从服务器读取。可能没有正确设置access-control-origin。",

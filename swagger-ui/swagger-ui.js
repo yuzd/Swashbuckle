@@ -1284,7 +1284,7 @@ SwaggerClient.prototype.build = function (mock) {
 
   var self = this;
 
-  this.progress('fetching resource list: ' + this.url + '; Please wait.');
+  this.progress('正在获取资源列表: ' + this.url + '; 请稍后.');
 
   var obj = {
     useJQuery: this.useJQuery,
@@ -24819,11 +24819,16 @@ window.SwaggerUi = Backbone.Router.extend({
   showMessage: function(data){
     if (data === undefined) {
       data = '';
-    }
+	  //隐藏Loding
+	  $('.loading').hide();
+    }else{
+	  $('.loading').show();
+	}
     var $msgbar = $('#message-bar');
     $msgbar.removeClass('message-fail');
     $msgbar.addClass('message-success');
     $msgbar.text(data);
+	console.log(window.SwaggerTranslator);
     if(window.SwaggerTranslator) {
       window.SwaggerTranslator.translate($msgbar);
     }
